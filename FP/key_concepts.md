@@ -1,5 +1,19 @@
 # Key Concepts
 
+TOC
+- [Key Concepts](#key-concepts)
+  - [Purity](#purity)
+  - [Immutability](#immutability)
+  - [Higher Order Functions (HOF)](#higher-order-functions-hof)
+  - [Closure](#closure)
+  - [Functional Composition](#functional-composition)
+  - [Partial Application/ Partial Functions](#partial-application-partial-functions)
+  - [Currying](#currying)
+  - [Referential Transparency](#referential-transparency)
+  - [Refs](#refs)
+
+<br/><br/>
+
 ## Purity
 
 Pure Functions are very simple functions. They only operate on their input parameters. 
@@ -36,7 +50,8 @@ Immutability creates simpler and safer code.
 
 ## Higher Order Functions (HOF)
 
-In FP, a function is a first class citizen of the language, i.e. it's just another value.
+In FP, a function is a first class citizen of the language, i.e. it's just another value.   
+**HOFs are functions that either take functions as parameters, return functions or both**
 
 ``` javascript
 // higher order function
@@ -45,7 +60,6 @@ function executor(fnc, value){
 }
 ```
 
-**HOFs are functions that either take functions as parameters, return functions or both**
 <br/><br/>
 
 ## Closure
@@ -121,9 +135,50 @@ const sum5 = x => sum(5, x) //sum5 is partial application function
 ## Currying
 <br/>
 A Curried Function is a function that only takes a single parameter at a time.      
-Currying turns a function that take multiple arguments into a set of partial functions that take one argument at a time.
+Currying turns a function that takes multiple arguments into a set of partial functions that take one argument at a time.
+Currying helps in composition
 
-### Refs
+```javascript
+const arr = [1,2,3,4,5,6]
+
+const isOdd = (x) => x%2 == 1
+const square = (x) => x*x
+const reduce = Array.reduce
+const summ = (acc,x)=>acc+x
+
+//since only one argument is expected
+const sumOddSquaredArr = arr.filter(isOdd).map(square).reduce(summ, 0)
+
+```
+
+## Referential Transparency
+
+A referential transparent function can be safely replaced by its expression. All pure functions are referential transparent.
+
+```javascript
+
+var y = 1
+const myFunc1 = function(x){ return x+y }  //not referential transparent
+
+const myFunc2 = function(x, y){ return x+y } //referential transparent
+
+const myFunc3 = function(x, y, z){ return myFunc2(x, myFunc2(y, z)) }
+
+//replace myFunc2 in myFunc3
+const myFunc4 = function(x, y, z){
+  return (function(x,y){
+    return x+y
+  })(x, (function(x, y){ return x+y })(y, z))
+}
+
+// myFunc3 is same as myFunc4
+console.log(myFunc3(1,2,3) === myFunc4(1,2,3))
+
+```
+
+
+## Refs
 * [So You Want to be a Functional Programmer Series - Charles Scalfani
  ](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536)
- * [](https://medium.com/javascript-scene/curry-and-function-composition-2c208d774983#:~:text=A%20curried%20function%20is%20a,that%20takes%20the%20third%20argument.)
+* [Composing Software - Eric Elliot](https://medium.com/javascript-scene/curry-and-function-composition-2c208d774983)
+* [Hey Underscore, You're Doing It Wrong!](https://www.youtube.com/watch?v=m3svKOdZijA&app=desktop)

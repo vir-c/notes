@@ -1,6 +1,9 @@
 # Functional Programming
 
-### Idempotency
+## TOC
+
+
+## Idempotency
 Mathematically function is idempotent if f(f(x)) = f(x)   
 e.g. -> Math.floor, ceil, lowercase/upperca
 se, trim   
@@ -22,7 +25,7 @@ Refs:
 https://szymonkrajewski.pl/what-is-idempotence/
 
 
-### Imperative and Declarative Programming
+## Imperative and Declarative Programming
 
 Imperative programming (including OOP) describes computation in terms of the program state and changes to that state (How to do)
 
